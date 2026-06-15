@@ -20,3 +20,11 @@ Chủ đề chính: kinh doanh kính mắt online-first, funnel bán hàng, mark
 Installed Python 3.12.9 + packages: matplotlib, pandas, requests, beautifulsoup4, rank-bm25.
 Created `tools/search.py` — BM25 full-text search over wiki pages.
 Node.js v20 and ripgrep already available on system.
+
+## [2026-06-13] reset | Wiki reset to empty state
+
+User reorganized wiki/ pages back into raw/ via Obsidian (manual move), result was nested/messy.
+Flattened moved pages into `raw/` as plain files: `echoes-of-time.md`, `he-sinh-thai-kinh-mat.md`,
+`marketing-content-strategy.md`, `mo-hinh-ban-kinh-online.md`, `silent-film-funny-fails.md`,
+`tong-hop-du-an-son-summary.md`. Reset `wiki/index.md` and `wiki/overview.md` to empty templates.
+Wiki is now back to a clean slate, ready for re-ingest.

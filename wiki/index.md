@@ -7,19 +7,16 @@ Each entry: `- [[page-name]] — one-line summary`
 ---
 
 ## Overview
-- [[overview]] — Bức tranh lớn: hệ sinh thái kính mắt online-first, AI-driven của Sơn
+*(none yet)*
 
 ## Sources
-- [[source/tong-hop-du-an-son]] — Tài liệu chiến lược tổng hợp toàn bộ dự án & định hướng của Sơn
+*(none yet)*
 
 ## Entities
-- [[entity/he-sinh-thai-kinh-mat]] — Doanh nghiệp kính mắt chính, ~30M/tháng, đang pivot online
-- [[entity/echoes-of-time]] — Kênh YouTube storytelling tiếng Việt
-- [[entity/silent-film-funny-fails]] — Kênh YouTube silent film, target US/UK 55+
+*(none yet)*
 
 ## Concepts
-- [[concept/mo-hinh-ban-kinh-online]] — Funnel & mô hình bán kính online (Minh bạch + AI + Giá)
-- [[concept/marketing-content-strategy]] — Hệ thống marketing tự động đa kênh
+*(none yet)*
 
 ## Analyses & Comparisons
 *(none yet)*
