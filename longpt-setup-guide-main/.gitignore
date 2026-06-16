@@ -1,0 +1,39 @@
+# Obsidian workspace (local state, không share)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/graph.json
+.obsidian/cache
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Claude local settings (chứa info máy local)
+.claude/settings.local.json
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python (nếu sau này thêm script)
+__pycache__/
+*.pyc
+.venv/
+.venv-mkdocs/
+*.egg-info/
+
+# MkDocs build output (generated)
+docs/
+_site/
+.cache/
+
+# OS temp
+Thumbs.db
+ehthumbs.db
+
+# Vault internal lock
+.git-lock

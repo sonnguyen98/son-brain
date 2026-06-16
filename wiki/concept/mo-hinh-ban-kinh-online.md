@@ -28,7 +28,7 @@ Nhận video quy trình gia công
 Giao hàng
 ```
 
-Funnel này là cách triển khai cụ thể của [[he-thong-ban-hang-8-2]] cho kênh online: bot xử lý Bước 1-2 (thu thập thông tin, hẹn/đặt lịch qua Zalo), tư vấn viên xử lý Bước 3-7 (xây quan hệ, tư vấn theo [[vpd-hinh-tron-hinh-vuong]], chốt đơn, xử lý từ chối), video gia công minh bạch là vũ khí chốt ở Bước 6-8.
+Funnel này là cách triển khai cụ thể của [[he-thong-ban-hang-8-2]] cho kênh online: bot xử lý Bước 1-2 (thu thập thông tin, hẹn/đặt lịch qua Zalo), tư vấn viên xử lý Bước 3-7 (xây quan hệ, tư vấn theo [[vpd-hinh-tron-hinh-vuong]], [[chot-don]], xử lý từ chối), video gia công minh bạch là vũ khí chốt ở Bước 6-8.
 
 ---
 

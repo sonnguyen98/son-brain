@@ -19,7 +19,9 @@ Quy trình chuẩn cho nhân viên bán hàng tại **Kính Mắt Việt Hàn** 
 | 1 | Đón khách & xây quan hệ tin cậy | ≈ Bước 3 (Tử huyệt) |
 | 2 | Xác định nhu cầu (bằng câu hỏi) | ≈ Bước 4 (Hình Tròn) |
 | 3 | Trình bày Tính năng → Lợi ích | ≈ Bước 5 (Hình Vuông) |
-| 4 | Báo giá & Chốt đơn | ≈ Bước 6 |
+
+> SOP này là **bằng chứng cụ thể** cho [[triet-ly-lam-viec-son]] đang được thực thi: 6 bước có script chi tiết → người mới đọc làm được = đã đóng gói thành công. Model template cho mọi SOP khác Sơn sẽ viết tiếp.
+| 4 | Báo giá & [[chot-don\|Chốt đơn]] | ≈ Bước 6 |
 | 5 | Xử lý từ chối | ≈ Bước 7 |
 | 6 | Follow-up & Chăm sóc sau bán | ≈ Bước 8 |
 

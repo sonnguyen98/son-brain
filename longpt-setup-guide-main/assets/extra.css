@@ -1,0 +1,76 @@
+/* Custom styling for Longpt's Setup-Guide */
+
+/* Vietnamese typography fine-tuning */
+.md-content {
+  hyphens: none;  /* tiếng Việt không hyphenate */
+}
+
+/* Header logo */
+.md-header__title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Better blockquote */
+.md-typeset blockquote {
+  border-left-width: 0.3rem;
+  border-left-color: var(--md-accent-fg-color);
+  background: rgba(124, 77, 255, 0.05);
+  padding: 0.8rem 1rem;
+  margin: 1rem 0;
+}
+
+/* Larger code font readability */
+.md-typeset code,
+.md-typeset pre {
+  font-size: 0.85rem;
+}
+
+/* Table styling */
+.md-typeset table:not([class]) {
+  font-size: 0.85rem;
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--md-primary-fg-color--light);
+  color: white;
+  font-weight: 600;
+}
+
+/* Wikilink (sau khi roamlinks render) */
+.md-content a {
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+
+.md-content a:hover {
+  border-bottom-style: solid;
+}
+
+/* Frontmatter YAML hidden in rendered page */
+.md-content hr:first-of-type ~ hr:nth-of-type(2) {
+  margin-top: 2rem;
+}
+
+/* Better h1 spacing */
+.md-typeset h1 {
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+/* Footer enhancement */
+.md-footer-meta {
+  background: var(--md-primary-fg-color--dark);
+}
+
+/* Search box larger */
+.md-search__input {
+  font-size: 0.85rem;
+}
+
+/* Mobile: better tap targets */
+@media (max-width: 768px) {
+  .md-typeset a {
+    padding: 0.1rem 0;
+  }
+}

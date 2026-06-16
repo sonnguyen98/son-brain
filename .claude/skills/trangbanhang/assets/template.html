@@ -1,0 +1,682 @@
+<!doctype html>
+<!--
+  ============================================================
+  TEMPLATE TRANG BÁN HÀNG CHUYỂN ĐỔI CAO  (skill: trangbanhang)
+  ------------------------------------------------------------
+  File HTML tự chứa: font qua CDN, CSS/JS inline, không framework.
+  Deploy thẳng lên Netlify/Vercel.
+
+  CÁCH DÙNG:
+  1. Đổi tông: chỉnh các biến màu trong :root (--bg, --surface, --text,
+     --accent). Mọi màu tham chiếu biến -> đổi 1 chỗ là đổi cả trang.
+     Mặc định nền sáng + accent xanh dương. LUÔN giữ nền sáng, không dùng nền tối.
+  2. Thay mọi {{TOKEN}} và nội dung mẫu bằng nội dung sản phẩm thật.
+  3. Trỏ mọi href="#bang-gia" / href="#" của nút đặt hàng tới form/Zalo thật.
+  4. MINH BẠCH: thay review/tên/ảnh/số bằng dữ liệu THẬT. Không bịa.
+     Phần review hiện là placeholder "[Tên khách hàng]".
+  5. Giữ: thanh CTA đáy mobile (#mobileCta), timeline kể chuyện, neo giá 3 gói.
+  ============================================================
+-->
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{BRAND}} — {{SEO_TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* ===== NỀN SÁNG (mặc định) — đổi --accent theo sản phẩm ===== */
+    --bg:#FFFFFF;
+    --bg-2:#F5F6F8;          /* nền tint cho section xen kẽ */
+    --surface:#FFFFFF;       /* nền thẻ */
+    --surface-2:#EEF1F5;
+    --line:#E4E7EC;          /* viền nhạt */
+    --text:#1A1D23;          /* chữ gần đen */
+    --muted:#5B6472;         /* chữ phụ */
+    --muted-2:#98A0AD;
+    --accent:#2563EB;        /* xanh dương = hành động/CTA; đổi theo sản phẩm */
+    --accent-deep:#1D4FD8;
+    --accent-soft:rgba(37,99,235,.10);
+    --ember:#E5484D;         /* đỏ — chỉ dùng cho cảnh báo nỗi đau */
+    --maxw:1140px;
+    --radius:14px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Roboto",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:17px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  .display{font-family:"Montserrat",sans-serif;font-weight:800;line-height:1.05;text-transform:uppercase;letter-spacing:0}
+  .eyebrow{
+    font-size:13px;font-weight:700;letter-spacing:3px;text-transform:uppercase;
+    color:var(--accent);
+  }
+  .muted{color:var(--muted)}
+
+  /* contour / sweat-map motif */
+  .contour{position:absolute;inset:0;pointer-events:none;opacity:.5;z-index:0}
+
+  /* ---------- NAV ---------- */
+  header.nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.85);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .logo{font-family:"Montserrat",sans-serif;font-weight:800;font-size:26px;letter-spacing:4px;text-transform:uppercase}
+  .logo span{color:var(--accent)}
+  .nav-links{display:flex;gap:30px;font-size:14px;font-weight:600;color:var(--muted)}
+  .nav-links a:hover{color:var(--text)}
+  .nav-cta{display:inline-flex}
+
+  /* ---------- BUTTONS ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    font-family:"Roboto",sans-serif;font-weight:700;font-size:16px;
+    letter-spacing:.3px;
+    padding:16px 28px;border-radius:11px;border:0;cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    line-height:1;text-align:center;
+  }
+  .btn-primary{
+    background:var(--accent);color:#ffffff;
+    box-shadow:0 8px 30px -8px rgba(37,99,235,.55);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 38px -8px rgba(37,99,235,.7);background:#1D4FD8}
+  .btn-primary:active{transform:translateY(0)}
+  .btn-ghost{background:transparent;color:var(--text);border:1.5px solid var(--line);padding:14px 24px}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-sm{padding:11px 20px;font-size:14px}
+  .btn-lg{padding:19px 38px;font-size:18px}
+  .friction{font-size:13.5px;color:var(--muted);margin-top:14px;font-weight:500}
+  .friction b{color:var(--text);font-weight:700}
+  .friction .dot{color:var(--accent);margin:0 7px}
+
+  /* ---------- HERO ---------- */
+  .hero{position:relative;padding:74px 0 90px;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero::before{
+    content:"";position:absolute;width:620px;height:620px;border-radius:50%;
+    background:radial-gradient(circle,rgba(37,99,235,.16),transparent 62%);
+    top:-180px;right:-120px;filter:blur(8px);z-index:0;
+  }
+  .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.05fr .95fr;gap:50px;align-items:center}
+  .hero h1{font-size:clamp(42px,6.4vw,82px);margin:18px 0 22px}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero-sub{font-size:19px;color:var(--muted);max-width:520px;margin-bottom:30px}
+  .hero-sub b{color:var(--text);font-weight:700}
+  .hero-cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+  .trust-strip{display:flex;gap:26px;margin-top:38px;flex-wrap:wrap}
+  .trust-item{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;color:var(--muted)}
+  .trust-item svg{flex:none;color:var(--accent)}
+
+  /* image placeholder */
+  .ph{
+    position:relative;border-radius:var(--radius);overflow:hidden;
+    background:
+      linear-gradient(135deg,#EEF1F5 0%,#F7F8FA 100%),
+      var(--surface);
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;
+    color:var(--muted-2);text-align:center;
+  }
+  .ph .ph-label{font-size:13px;font-weight:600;letter-spacing:.5px;max-width:80%}
+  .ph .ph-icon{opacity:.5}
+  .hero-ph{aspect-ratio:4/5;
+    background:
+      radial-gradient(120% 90% at 70% 10%,rgba(37,99,235,.10),transparent 55%),
+      linear-gradient(160deg,#EDF0F4,#F6F8FB);
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{position:relative}
+  .sec{padding:88px 0}
+  .sec-head{max-width:680px;margin-bottom:48px}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center}
+  .sec-head h2{font-size:clamp(30px,4.2vw,50px);margin:14px 0 16px;line-height:1.04}
+  .sec-head p{color:var(--muted);font-size:18px}
+
+  /* ---------- PAIN / STORY ---------- */
+  .pain{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .pain h2 em{color:var(--ember);font-style:normal}
+
+  .timeline{position:relative;max-width:680px;margin:0 auto;padding-left:8px}
+  .timeline::before{
+    content:"";position:absolute;left:31px;top:10px;bottom:24px;width:2px;
+    background:linear-gradient(180deg,var(--line),var(--ember) 78%,var(--ember));
+  }
+  .moment{position:relative;display:grid;grid-template-columns:64px 1fr;gap:18px;padding-bottom:30px}
+  .moment:last-child{padding-bottom:8px}
+  .moment .min{
+    position:relative;z-index:2;
+    font-family:"Montserrat",sans-serif;font-weight:800;font-size:21px;letter-spacing:.5px;
+    width:64px;height:64px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--surface);border:2px solid var(--line);color:var(--muted);
+  }
+  .moment .m-body{padding-top:8px}
+  .moment h3{font-size:19px;margin-bottom:6px}
+  .moment p{font-size:15.5px;color:var(--muted);line-height:1.6}
+  .moment.peak .min{border-color:var(--ember);color:var(--ember);
+    box-shadow:0 0 0 6px rgba(229,72,77,.12),0 0 30px -6px rgba(229,72,77,.6)}
+  .moment.peak h3{color:#B42318}
+
+  .turn{
+    max-width:680px;margin:14px auto 0;
+    background:linear-gradient(135deg,rgba(229,72,77,.10),var(--surface));
+    border:1px solid rgba(229,72,77,.32);border-left:4px solid var(--ember);
+    border-radius:14px;padding:28px 30px;
+  }
+  .turn p{font-size:19px;line-height:1.55;color:var(--text)}
+  .turn b{color:var(--ember)}
+
+  /* ---------- SOLUTION / BENEFITS ---------- */
+  .sol-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+  .feat{
+    background:linear-gradient(180deg,var(--surface),var(--bg-2));
+    border:1px solid var(--line);border-radius:var(--radius);padding:30px;
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .feat:hover{border-color:rgba(37,99,235,.4);transform:translateY(-3px)}
+  .feat-ic{width:50px;height:50px;border-radius:12px;background:var(--accent-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--accent);margin-bottom:18px}
+  .feat h3{font-size:21px;margin-bottom:9px}
+  .feat .tech{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+  .feat p{color:var(--muted);font-size:15.5px}
+
+  /* spec band */
+  .spec{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:54px}
+  .spec-item{text-align:center;padding:26px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg-2)}
+  .spec-num{font-family:"Montserrat",sans-serif;font-weight:800;font-size:46px;color:var(--accent);line-height:1}
+  .spec-lbl{font-size:13.5px;color:var(--muted);margin-top:8px;font-weight:600}
+
+  /* ---------- PROOF ---------- */
+  .proof{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .rev{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:26px}
+  .stars{color:var(--accent);letter-spacing:3px;font-size:15px;margin-bottom:14px}
+  .rev p{font-size:15.5px;margin-bottom:18px;line-height:1.55}
+  .rev .who{display:flex;align-items:center;gap:12px}
+  .rev .av{width:40px;height:40px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--accent);font-size:15px}
+  .rev .who b{font-size:14.5px;display:block}
+  .rev .who span{font-size:12.5px;color:var(--muted)}
+
+  /* ---------- GUARANTEE ---------- */
+  .guar-box{
+    background:linear-gradient(135deg,var(--surface),var(--bg-2));
+    border:1px solid rgba(37,99,235,.35);border-radius:18px;
+    padding:48px;display:grid;grid-template-columns:auto 1fr;gap:34px;align-items:center;
+  }
+  .guar-seal{width:104px;height:104px;border-radius:50%;border:2px solid var(--accent);
+    display:flex;align-items:center;justify-content:center;flex-direction:column;
+    color:var(--accent);text-align:center;flex:none;
+    box-shadow:0 0 40px -8px rgba(37,99,235,.5) inset;
+  }
+  .guar-seal .gn{font-family:"Montserrat",sans-serif;font-weight:800;font-size:34px;line-height:.9}
+  .guar-seal .gt{font-size:10px;letter-spacing:1.5px;font-weight:700}
+  .guar-box h2{font-size:30px;margin-bottom:12px}
+  .guar-box p{color:var(--muted);font-size:16px}
+
+  /* ---------- PRICING ---------- */
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+  .plan{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:32px 28px;display:flex;flex-direction:column;position:relative}
+  .plan.best{border-color:var(--accent);box-shadow:0 0 60px -20px rgba(37,99,235,.5);transform:scale(1.03)}
+  .plan-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);
+    background:var(--accent);color:#ffffff;font-size:12px;font-weight:800;letter-spacing:1px;
+    padding:6px 16px;border-radius:30px;text-transform:uppercase;white-space:nowrap}
+  .plan h3{font-family:"Montserrat",sans-serif;font-weight:800;font-size:26px;letter-spacing:1px}
+  .plan .qty{font-size:14px;color:var(--muted);margin-bottom:22px}
+  .plan .old{color:var(--muted-2);text-decoration:line-through;font-size:16px}
+  .plan .now{font-family:"Montserrat",sans-serif;font-weight:800;font-size:44px;line-height:1;margin:4px 0}
+  .plan .now small{font-family:"Roboto";font-size:16px;color:var(--muted);font-weight:600}
+  .plan .per{font-size:13.5px;color:var(--accent);font-weight:700;margin-bottom:22px}
+  .plan ul{list-style:none;margin-bottom:26px;flex:1}
+  .plan li{font-size:14.5px;padding:9px 0;border-bottom:1px solid var(--line);color:var(--muted);display:flex;gap:10px;align-items:flex-start}
+  .plan li:last-child{border-bottom:0}
+  .plan li svg{color:var(--accent);flex:none;margin-top:3px}
+  .plan .btn{width:100%}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{max-width:780px;margin:0 auto}
+  .faq{border:1px solid var(--line);border-radius:12px;margin-bottom:12px;background:var(--surface);overflow:hidden}
+  .faq button{
+    width:100%;text-align:left;background:transparent;border:0;color:var(--text);cursor:pointer;
+    font-family:"Roboto";font-size:17px;font-weight:700;padding:21px 24px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;line-height:1.4;
+  }
+  .faq .q-ic{flex:none;color:var(--accent);transition:transform .25s ease;font-size:22px;line-height:1}
+  .faq.open .q-ic{transform:rotate(45deg)}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+  .faq-a p{padding:0 24px 22px;color:var(--muted);font-size:15.5px}
+
+  /* ---------- FINAL CTA ---------- */
+  .final{position:relative;text-align:center;padding:96px 0;overflow:hidden;border-top:1px solid var(--line)}
+  .final::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(60% 100% at 50% 0%,rgba(37,99,235,.16),transparent 60%);z-index:0}
+  .final .wrap{position:relative;z-index:2}
+  .final h2{font-size:clamp(34px,5.5vw,66px);margin-bottom:20px}
+  .final p{color:var(--muted);font-size:19px;max-width:520px;margin:0 auto 34px}
+
+  /* ---------- FOOTER ---------- */
+  footer{border-top:1px solid var(--line);padding:40px 0;color:var(--muted-2);font-size:13.5px}
+  .foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  .foot-note{background:rgba(37,99,235,.06);border:1px dashed rgba(37,99,235,.35);
+    border-radius:10px;padding:14px 18px;font-size:13px;color:var(--muted);margin-top:26px;line-height:1.5}
+  .foot-note b{color:var(--accent)}
+
+  /* ---------- MOBILE STICKY CTA BAR ---------- */
+  .mobile-cta{
+    position:fixed;left:0;right:0;bottom:0;z-index:60;
+    display:none;align-items:center;gap:12px;
+    padding:11px 16px calc(11px + env(safe-area-inset-bottom));
+    background:rgba(255,255,255,.96);backdrop-filter:blur(14px);
+    border-top:1px solid var(--line);
+    transform:translateY(110%);transition:transform .3s ease;
+  }
+  .mobile-cta.show{transform:translateY(0)}
+  .mobile-cta .mc-price{flex:none;line-height:1.1}
+  .mobile-cta .mc-price b{font-family:"Montserrat",sans-serif;font-weight:800;font-size:22px;color:var(--text);display:block}
+  .mobile-cta .mc-price span{font-size:11.5px;color:var(--muted)}
+  .mobile-cta .btn{flex:1;padding:15px 16px}
+  .mobile-cta{box-shadow:0 -4px 20px -6px rgba(16,24,40,.14)}
+  header.nav{box-shadow:0 1px 0 var(--line)}
+  .feat,.rev,.plan,.pain-card{box-shadow:0 1px 2px rgba(16,24,40,.04),0 10px 28px -20px rgba(16,24,40,.18)}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ---------- RESPONSIVE (mobile-first priority) ---------- */
+  @media(max-width:900px){
+    .hero-grid{grid-template-columns:1fr;gap:32px}
+    .hero-ph{max-width:380px;margin:0 auto}
+    .sol-grid,.rev-grid,.spec,.price-grid{grid-template-columns:1fr}
+    .spec{grid-template-columns:repeat(2,1fr)}
+    .guar-box{grid-template-columns:1fr;text-align:center;padding:34px 24px}
+    .guar-seal{margin:0 auto}
+    .plan.best{transform:none}
+    .nav-links{display:none}
+  }
+
+  /* phones — the primary target */
+  @media(max-width:560px){
+    body{font-size:16.5px;padding-bottom:78px}   /* room for sticky bar */
+    .wrap{padding:0 18px}
+    .sec{padding:54px 0}
+    .sec-head{margin-bottom:32px}
+    .hero{padding:34px 0 50px}
+    .hero h1{font-size:clamp(38px,11vw,52px);margin:14px 0 18px}
+    .hero-sub{font-size:17px;margin-bottom:24px}
+    .hero-ph{aspect-ratio:1/1;max-width:100%}
+    .trust-strip{flex-direction:column;gap:12px;margin-top:28px}
+
+    /* big thumb-friendly buttons */
+    .btn{min-height:54px;font-size:17px}
+    .btn-lg{width:100%;padding:18px}
+    .hero-cta-row{flex-direction:column;align-items:stretch;gap:12px}
+    .hero-cta-row .btn{width:100%}
+    .nav-cta{min-height:42px;padding:11px 18px}
+
+    /* story timeline tightened for narrow screens */
+    .timeline{padding-left:0}
+    .timeline::before{left:25px}
+    .moment{grid-template-columns:52px 1fr;gap:14px}
+    .moment .min{width:52px;height:52px;font-size:18px}
+    .moment h3{font-size:18px}
+    .turn{padding:24px 22px}
+    .turn p{font-size:17.5px}
+
+    .spec{grid-template-columns:repeat(2,1fr);gap:12px}
+    .spec-num{font-size:38px}
+    .rev,.feat,.plan{padding:24px 22px}
+
+    /* show the sticky purchase bar on phones */
+    .mobile-cta{display:flex}
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    *{scroll-behavior:auto!important}
+    .reveal{opacity:1;transform:none;transition:none}
+    .btn,.mobile-cta{transition:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <div class="logo">{{BRAND_1}}<span>{{BRAND_2}}</span></div>
+    <nav class="nav-links">
+      <a href="#van-de">Vấn đề</a>
+      <a href="#cong-nghe">Công nghệ</a>
+      <a href="#danh-gia">Đánh giá</a>
+      <a href="#bang-gia">Bảng giá</a>
+    </nav>
+    <a href="#bang-gia" class="btn btn-primary btn-sm nav-cta">Đặt hàng</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="contour" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g fill="none" stroke="#2563EB" stroke-width="1" opacity="0.10">
+      <path d="M-50 480 C 250 360, 450 520, 700 400 S 1100 300, 1300 420"/>
+      <path d="M-50 520 C 250 410, 450 560, 700 450 S 1100 360, 1300 470"/>
+      <path d="M-50 440 C 250 320, 450 480, 700 360 S 1100 250, 1300 380"/>
+      <path d="M-50 560 C 250 460, 450 600, 700 500 S 1100 420, 1300 520"/>
+    </g>
+  </svg>
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <span class="eyebrow">Quần lót thể thao nam · Thế hệ mới</span>
+      <h1 class="display">Khô ráo từ <em>hiệp đầu</em> đến phút bù giờ</h1>
+      <p class="hero-sub">Chiếc quần lót cotton thấm mồ hôi rồi dính bết, hăm đỏ và xê dịch giữa trận đang phá buổi tập của bạn. <b>VANTA</b> dệt từ sợi kéo ẩm, đường may phẳng chống cọ và ôm cố định — mặc vào rồi quên luôn là đang mặc.</p>
+      <div class="hero-cta-row">
+        <a href="#bang-gia" class="btn btn-primary btn-lg">Tôi muốn thử ngay</a>
+        <a href="#cong-nghe" class="btn btn-ghost btn-lg">Xem công nghệ vải</a>
+      </div>
+      <p class="friction"><b>Đổi size miễn phí</b><span class="dot">•</span>Giao toàn quốc<span class="dot">•</span>Thanh toán khi nhận hàng</p>
+
+      <div class="trust-strip">
+        <div class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Khô thoáng suốt buổi tập</div>
+        <div class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Không hăm, không cọ</div>
+        <div class="trust-item"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Đứng yên khi bạn chuyển động</div>
+      </div>
+    </div>
+
+    <div class="reveal in">
+      <div class="ph hero-ph">
+        <svg class="ph-icon" width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+        <div class="ph-label">[ Ảnh sản phẩm hero — nam giới đang vận động, nền sáng sạch, mồ hôi/chuyển động ]</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAIN (storytelling) -->
+<section class="sec pain" id="van-de">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Câu chuyện của 90 phút</span>
+      <h2 class="display">Bạn không thua vì <em>thể lực</em></h2>
+      <p>18 giờ chiều. Sân bóng. Giày mới, tinh thần sung, thể lực đang đỉnh. Mọi thứ sẵn sàng — bạn nghĩ vậy. Đây là chuyện xảy ra sau đó.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="moment reveal">
+        <div class="min">15'</div>
+        <div class="m-body">
+          <h3>Mọi thứ vẫn ổn</h3>
+          <p>Bạn chạy nhẹ, vào nhịp, cảm giác tự tin. Chưa có gì bất thường. Trận đấu là của bạn.</p>
+        </div>
+      </div>
+      <div class="moment reveal">
+        <div class="min">35'</div>
+        <div class="m-body">
+          <h3>Mồ hôi bắt đầu</h3>
+          <p>Lớp cotton ngấm nước, nặng dần. Mỗi lần bạn khựng lại, mảng vải lạnh dính bết vào da — khó chịu, nhưng bạn cố lờ đi.</p>
+        </div>
+      </div>
+      <div class="moment reveal">
+        <div class="min">60'</div>
+        <div class="m-body">
+          <h3>Đùi trong rát lên</h3>
+          <p>Mỗi nhịp nước rút là một lần vải thô cọ vào da. Bạn bắt đầu chạy dè chừng mà chính mình không nhận ra. Tốc độ tụt, bạn tưởng do xuống sức.</p>
+        </div>
+      </div>
+      <div class="moment peak reveal">
+        <div class="min">75'</div>
+        <div class="m-body">
+          <h3>Pha bóng quyết định — và bạn để vuột</h3>
+          <p>Bạn thoát xuống trống trải. Nhưng quần đã xê dịch, dồn cục. Theo phản xạ, tay bạn đưa xuống chỉnh. Nửa giây đó — bóng đã mất. Cả sân nhìn bạn.</p>
+        </div>
+      </div>
+      <div class="moment reveal">
+        <div class="min">90'</div>
+        <div class="m-body">
+          <h3>Hết trận, cái giá vẫn còn</h3>
+          <p>Về tới nhà người vẫn ẩm. Da đùi hăm đỏ. Mùi khó chịu bám lại dù bạn đã cố. Đêm đó bạn ngủ không ngon — không chỉ vì thua.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="turn reveal">
+      <p>Sáng hôm sau bạn trách thể lực. Trách hôm qua đá dở. Nhưng thứ phản bội bạn suốt 90 phút lại là cái duy nhất bạn chưa từng nghĩ tới — <b>lớp vải sát người nhất</b>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="sec" id="cong-nghe">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Giải pháp</span>
+      <h2 class="display">Được thiết kế để bạn quên nó đi</h2>
+      <p>VANTA không phải đồ lót thường khoác mác thể thao. Bốn lớp công nghệ giải quyết trực tiếp bốn nỗi đau ở trên.</p>
+    </div>
+    <div class="sol-grid">
+      <div class="feat reveal">
+        <div class="feat-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2s6 5.7 6 10a6 6 0 0 1-12 0c0-4.3 6-10 6-10Z"/></svg></div>
+        <div class="tech">Sợi kéo ẩm</div>
+        <h3>Khô trong vài giây, không dính da</h3>
+        <p>Vải đẩy mồ hôi ra mặt ngoài và bay hơi nhanh, giữ lớp tiếp xúc luôn khô — thay vì giữ ẩm như cotton.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16M4 6h16M4 18h16"/></svg></div>
+        <div class="tech">Đường may phẳng (flatlock)</div>
+        <h3>Hết cọ, hết hăm đùi trong</h3>
+        <p>Mối nối ép phẳng sát bề mặt, không gờ cứa vào da dù bạn chạy hay đạp xe hàng giờ.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22V12M12 12 4 7m8 5 8-5M4 7v10l8 5 8-5V7l-8-5-8 5Z"/></svg></div>
+        <div class="tech">Ôm 3D cố định</div>
+        <h3>Đứng yên khi bạn chuyển động</h3>
+        <p>Form ôm theo cơ thể với cạp co giãn giữ chắc, không tuột, không dồn cục, không phải chỉnh giữa trận.</p>
+      </div>
+      <div class="feat reveal">
+        <div class="feat-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg></div>
+        <div class="tech">Thoáng khí · kháng khuẩn</div>
+        <h3>Thoáng mát, hạn chế ám mùi</h3>
+        <p>Cấu trúc dệt cho khí lưu thông và xử lý kháng khuẩn giúp giảm mùi, kể cả những buổi tập dài nhất.</p>
+      </div>
+    </div>
+
+    <div class="spec">
+      <div class="spec-item reveal"><div class="spec-num">0<span style="font-size:30px">s</span></div><div class="spec-lbl">cảm giác "đang mặc" sau vài phút</div></div>
+      <div class="spec-item reveal"><div class="spec-num">4</div><div class="spec-lbl">lớp công nghệ trong một chiếc</div></div>
+      <div class="spec-item reveal"><div class="spec-num">∞</div><div class="spec-lbl">cho mọi môn vận động cường độ cao</div></div>
+      <div class="spec-item reveal"><div class="spec-num">100<span style="font-size:24px">%</span></div><div class="spec-lbl">đổi size miễn phí nếu chưa vừa</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="sec proof" id="danh-gia">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Người thật · Buổi tập thật</span>
+      <h2 class="display">Mặc một lần là không quay lại đồ cũ</h2>
+      <p>Phản hồi từ những người vận động nhiều — chạy, đá bóng, gym, đạp xe đường dài.</p>
+    </div>
+    <div class="rev-grid">
+      <div class="rev reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Đá bóng sân 7 mỗi tuần 3 buổi, lần đầu không phải chỉnh lại quần giữa trận. Đùi trong hết rát hẳn luôn."</p>
+        <div class="who"><div class="av">T</div><div><b>[ Tên khách hàng ]</b><span>Phong trào bóng đá · Hà Nội</span></div></div>
+      </div>
+      <div class="rev reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Chạy 15km mà khô thật. Trước mặc đồ thường về tới nhà vẫn ẩm, giờ thì khác hẳn. Đã mua thêm combo 5."</p>
+        <div class="who"><div class="av">H</div><div><b>[ Tên khách hàng ]</b><span>Runner bán marathon</span></div></div>
+      </div>
+      <div class="rev reveal">
+        <div class="stars">★★★★★</div>
+        <p>"Tập gym ra mồ hôi như tắm mà vẫn thoáng, không bí. Form ôm vừa, mặc cả ngày đi làm cũng thoải mái."</p>
+        <div class="who"><div class="av">M</div><div><b>[ Tên khách hàng ]</b><span>Gym 5 buổi/tuần</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="sec">
+  <div class="wrap reveal">
+    <div class="guar-box">
+      <div class="guar-seal"><div class="gn">30</div><div class="gt">NGÀY</div></div>
+      <div>
+        <h2 class="display">Mặc thử 30 ngày — không hợp, hoàn tiền</h2>
+        <p>Cứ mặc, cứ tập, cứ giặt thật. Nếu trong 30 ngày bạn thấy không khác gì đồ cũ, nhắn cho chúng tôi và nhận lại tiền — không cần giải thích dài dòng. Rủi ro thuộc về VANTA, không phải bạn.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="sec proof" id="bang-gia">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Chọn combo của bạn</span>
+      <h2 class="display">Mua càng nhiều, giá mỗi chiếc càng tốt</h2>
+      <p>Người tập đều thường cần 3–5 chiếc để xoay vòng giữa các buổi. Combo giúp bạn tiết kiệm rõ rệt.</p>
+    </div>
+    <div class="price-grid">
+      <div class="plan reveal">
+        <h3>Lẻ 1 chiếc</h3>
+        <div class="qty">Dùng thử trước khi quyết</div>
+        <div class="old">259.000đ</div>
+        <div class="now">199<small>k</small></div>
+        <div class="per">199.000đ / chiếc</div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> 1 chiếc, chọn 1 màu</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Đổi size miễn phí</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Bảo hành 30 ngày</li>
+        </ul>
+        <a href="#" class="btn btn-ghost">Đặt 1 chiếc</a>
+      </div>
+
+      <div class="plan best reveal">
+        <div class="plan-tag">Bán chạy nhất · Tiết kiệm 33%</div>
+        <h3>Combo 3 chiếc</h3>
+        <div class="qty">Đủ xoay vòng cả tuần tập</div>
+        <div class="old">777.000đ</div>
+        <div class="now">519<small>k</small></div>
+        <div class="per">chỉ 173.000đ / chiếc</div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> 3 chiếc, phối màu tùy chọn</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> <b style="color:var(--text)">Miễn phí vận chuyển</b></li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Đổi size miễn phí · Bảo hành 30 ngày</li>
+        </ul>
+        <a href="#" class="btn btn-primary">Đặt combo 3 — tiết kiệm nhất</a>
+      </div>
+
+      <div class="plan reveal">
+        <h3>Combo 5 chiếc</h3>
+        <div class="qty">Cho người tập mỗi ngày</div>
+        <div class="old">1.295.000đ</div>
+        <div class="now">799<small>k</small></div>
+        <div class="per">chỉ 159.000đ / chiếc</div>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> 5 chiếc, phối màu tùy chọn</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Miễn phí vận chuyển</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg> Giá mỗi chiếc thấp nhất</li>
+        </ul>
+        <a href="#" class="btn btn-ghost">Đặt combo 5</a>
+      </div>
+    </div>
+    <p class="friction" style="text-align:center;margin-top:26px"><b>Thanh toán khi nhận hàng (COD)</b><span class="dot">•</span>Giao toàn quốc 2–4 ngày<span class="dot">•</span>Đổi size miễn phí</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Còn băn khoăn?</span>
+      <h2 class="display">Câu hỏi thường gặp</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq reveal"><button>Mua online thì làm sao biết chọn đúng size? <span class="q-ic">+</span></button><div class="faq-a"><p>Trang đặt hàng có bảng size theo cân nặng & vòng eo, chọn trong 30 giây. Quan trọng hơn: nếu nhận về chưa vừa, bạn được <b>đổi size miễn phí</b> — chỉ cần nhắn cho shop.</p></div></div>
+      <div class="faq reveal"><button>Vải có thật sự khô nhanh hơn đồ thường không? <span class="q-ic">+</span></button><div class="faq-a"><p>Có. Khác biệt cốt lõi nằm ở sợi kéo ẩm đẩy mồ hôi ra mặt ngoài để bay hơi, thay vì giữ lại như cotton. Bạn cảm nhận rõ nhất ở buổi tập cường độ cao hoặc thời tiết nóng ẩm.</p></div></div>
+      <div class="faq reveal"><button>Mặc đi làm hằng ngày được không hay chỉ để tập? <span class="q-ic">+</span></button><div class="faq-a"><p>Được cả hai. Form ôm và thoáng khí khiến VANTA thoải mái khi mặc cả ngày, không chỉ lúc vận động.</p></div></div>
+      <div class="faq reveal"><button>Giặt nhiều lần có giãn, mất form không? <span class="q-ic">+</span></button><div class="faq-a"><p>Cạp và sợi co giãn được chọn để giữ form qua nhiều lần giặt. Nên giặt máy chế độ thường, tránh nước nóng và sấy nhiệt cao để bền nhất.</p></div></div>
+      <div class="faq reveal"><button>Bao lâu nhận hàng và thanh toán thế nào? <span class="q-ic">+</span></button><div class="faq-a"><p>Giao toàn quốc 2–4 ngày, <b>thanh toán khi nhận hàng (COD)</b> — bạn kiểm tra hàng rồi mới trả tiền.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">Sẵn sàng cho buổi tập tiếp theo?</span>
+      <h2 class="display">Mặc vào. Quên đi. Bứt tốc.</h2>
+      <p>Để chiếc quần lót làm đúng việc của nó — biến mất — và bạn tập trung 100% vào cuộc chơi.</p>
+      <a href="#bang-gia" class="btn btn-primary btn-lg">Đặt VANTA ngay</a>
+      <p class="friction">Đổi size miễn phí<span class="dot">•</span>Hoàn tiền trong 30 ngày<span class="dot">•</span>Thanh toán khi nhận hàng</p>
+    </div>
+  </div>
+</section>
+
+<!-- MOBILE STICKY CTA -->
+<div class="mobile-cta" id="mobileCta">
+  <div class="mc-price"><b>199k</b><span>từ · 1 chiếc</span></div>
+  <a href="#bang-gia" class="btn btn-primary">Đặt VANTA ngay</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="foot-inner">
+      <div class="logo" style="font-size:20px">{{BRAND_1}}<span>{{BRAND_2}}</span></div>
+      <div>© 2026 VANTA — Quần lót thể thao nam. Tên thương hiệu là placeholder, có thể đổi.</div>
+    </div>
+    <div class="foot-note">
+      <b>Lưu ý khi đưa vào dùng thật:</b> các đánh giá, tên khách hàng, ảnh sản phẩm và con số trong trang đang là <b>placeholder mẫu</b>. Hãy thay bằng review thật, ảnh thật và thông số vải đúng với sản phẩm của bạn trước khi chạy — đúng tinh thần minh bạch, tránh social proof giả.
+    </div>
+  </div>
+</footer>
+
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq button').forEach(function(b){
+    b.addEventListener('click',function(){
+      var f=b.parentElement, a=f.querySelector('.faq-a');
+      var open=f.classList.contains('open');
+      document.querySelectorAll('.faq').forEach(function(x){x.classList.remove('open');x.querySelector('.faq-a').style.maxHeight=null;});
+      if(!open){f.classList.add('open');a.style.maxHeight=a.scrollHeight+'px';}
+    });
+  });
+
+  // Scroll reveal
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+  },{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  // Mobile sticky CTA: show after hero leaves view, hide when pricing is visible
+  var bar=document.getElementById('mobileCta');
+  var hero=document.querySelector('.hero');
+  var pricing=document.getElementById('bang-gia');
+  var heroOut=false, priceIn=false;
+  function syncBar(){ bar.classList.toggle('show', heroOut && !priceIn); }
+  new IntersectionObserver(function(e){ heroOut=!e[0].isIntersecting; syncBar(); },{threshold:0}).observe(hero);
+  new IntersectionObserver(function(e){ priceIn=e[0].isIntersecting; syncBar(); },{threshold:.15}).observe(pricing);
+</script>
+</body>
+</html>

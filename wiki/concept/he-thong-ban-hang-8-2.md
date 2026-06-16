@@ -30,7 +30,7 @@ Mỗi bước gồm 3 lớp: **tư duy** (trò chơi bên trong) – **chiến l
 | 3 | Xây quan hệ thân tình | **Tử huyệt** — thiếu bước này thì "khách hỏi giá xong rồi đi" |
 | 4 | Xác định nhu cầu | = **Hình TRÒN** ([[vpd-hinh-tron-hinh-vuong]]) |
 | 5 | Trình bày lợi ích | = **Hình VUÔNG** ([[vpd-hinh-tron-hinh-vuong]]) |
-| 6 | Chốt đơn | Chỉ chốt sau khi giá trị đã rõ |
+| 6 | [[chot-don\|Chốt đơn]] | Chỉ chốt sau khi giá trị đã rõ |
 | 7 | Xử lý từ chối | Có sẵn word-track cho mọi lời từ chối thường gặp |
 | 8 | Chăm sóc & follow-up | Khởi động bánh đà mua lại + giới thiệu |
 
@@ -59,6 +59,8 @@ Với cửa hàng offline (Việt Hàn), khi khách bước vào coi như Bướ
 ---
 
 ## Lớp tự động hóa
+
+> Lớp tự động hóa của 8+2 trực tiếp hiện thực hóa [[triet-ly-lam-viec-son]] (đóng gói SOP + ủy quyền + automation = sống tự do). Đây là **một trong những lý do Sơn chọn 8+2** — không chỉ vì conversion mà vì kiến trúc của nó cho phép kinh doanh tự vận hành.
 
 | Loại | Việc |
 |---|---|

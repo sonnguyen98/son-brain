@@ -11,6 +11,10 @@ Một mảng lớn mới được bổ sung là khung bán hàng **[[he-thong-ba
 
 Mảng marketing/content ([[marketing-content-strategy]]) vận hành song song qua Facebook, TikTok/Reels, YouTube và blog, với hai kênh YouTube riêng: [[echoes-of-time]] (storytelling tiếng Việt) và [[silent-film-funny-fails]] (nhằm vào khán giả US/UK 55+, không cần ngôn ngữ). Tech stack content gồm Veo3, Suno AI, CapCut và Claude AI.
 
+Từ 2026-06-16, wiki bắt đầu có mảng **cá nhân** — bắt đầu bằng [[xem-tu-vi-le-quang-lang-2019]], buổi xem tử vi mà [[son]] thực hiện với thầy [[le-quang-lang]] năm 2019. Lời khuyên nghề từ thầy (kinh doanh công nghệ, phần mềm, lập trình, thiết kế) đáng chú ý vì **trùng hướng** với cách Sơn đang xây [[kinh-mat-soni]] (AI thử kính ảo, online-first, công nghệ). Lá số đầy đủ ở [[la-so-tu-vi-son]]. Hồ sơ chính chủ ở [[son]] — bao gồm gia đình ([[nguyen-hong-thuy]], [[nguyen-tue-an]], [[nguyen-tung-anh]]).
+
+**North star** chi phối mọi quyết định business của Sơn được capture ở [[triet-ly-lam-viec-son]]: sống tự do = kinh doanh tự vận hành khi không có Sơn = đóng gói SOP + ủy quyền + automation. Triết lý này giải thích vì sao Sơn chọn [[he-thong-ban-hang-8-2]] (kiến trúc có lớp tự động hóa rõ), vì sao đang pivot sang [[kinh-mat-soni]] (giảm phụ thuộc vào sự có mặt của Sơn ở cửa hàng), và là tiêu chí lọc mọi recommendation mới.
+
 **Câu hỏi mở / việc cần làm tiếp:**
 - Chưa có tài liệu chi tiết về khóa IPS (phần "how" của Bước 1 trong 8+2 và cách xây Hình Tròn/Hình Vuông từ đầu).
 - Một số file trong `raw/` (Affitor, Untitled, longpt-setup-guide) đang rỗng hoặc chưa rõ mục đích — cần Sơn bổ sung hoặc dọn dẹp.
