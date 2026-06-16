@@ -55,6 +55,21 @@ Hệ thống marketing tự động đa kênh cho [[he-sinh-thai-kinh-mat]].
 
 ---
 
+## Định vị bắt buộc (apply cho mọi script ads / post / landing)
+
+**Brand-led, không personal-brand quanh tay nghề Sơn.**
+
+- Đặt brand cửa hàng / thương hiệu ở trung tâm — không xây nhân hiệu cá nhân quanh việc "Sơn đo mắt giỏi"
+- Nhấn dịch vụ tổng thể + cam kết (đo lại miễn phí, đổi 7 ngày, bảo hành cả đời, chăm sóc tận tình) — đây là vũ khí thay credentials
+- Sơn xuất hiện như **người sáng lập có tâm**, không phải "thợ lành nghề"
+- **Tuyệt đối không** vẽ bằng cấp / credentials giả — Sơn không có bằng khúc xạ chính quy
+
+**Câu kiểm chứng** cho mọi nội dung: *"Nếu mai Sơn thuê 1 thợ khác đo thay, content này còn dùng được không?"* Nếu không → cá nhân hóa quá, đổi hướng.
+
+**Why**: Sơn xây tầm nhìn [[triet-ly-lam-viec-son]] — cửa hàng phụ thuộc tay nghề chủ là cửa hàng không scale được; personal brand quanh tay nghề cũng tạo trần khó vượt khi mở chi nhánh hoặc pivot sang [[kinh-mat-soni]].
+
+---
+
 ## Liên kết
 
 - [[he-sinh-thai-kinh-mat]]
